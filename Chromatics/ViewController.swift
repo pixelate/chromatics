@@ -12,8 +12,6 @@ class ViewController: NSViewController {
     var oscillator = AKOscillator()
     var mixer = AKMixer()
     
-    var currentHalfstep: Int = 0;
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,6 +22,7 @@ class ViewController: NSViewController {
         } catch {
         }
         
+        oscillator.start()
         oscillator.amplitude = 1
         
         NSEvent.addLocalMonitorForEvents(matching: .keyDown) { (event) -> NSEvent? in
@@ -33,12 +32,35 @@ class ViewController: NSViewController {
     }
     
     override func keyDown(with event: NSEvent) {
-        if event.keyCode == 49 {
-            oscillator.frequency = Double(calculateFrequency(halfstep: currentHalfstep).description)!
-            oscillator.start()
+        print(event.keyCode)
 
-            currentHalfstep = currentHalfstep + 1
+        if event.keyCode == 6 {
+            playNote(Note.C)
         }
+
+        if event.keyCode == 1 {
+            playNote(Note.CSharp)
+        }
+
+        if event.keyCode == 7 {
+            playNote(Note.D)
+        }
+
+        if event.keyCode == 2 {
+            playNote(Note.DSharp)
+        }
+
+        if event.keyCode == 8 {
+            playNote(Note.E)
+        }
+    }
+    
+    func playNote(_ note: Note) {
+        oscillator.frequency = Double(frequencyForNote(note: note).description)!
+    }
+    
+    func frequencyForNote(note: Note, octave: Int = 4) -> Decimal {
+        return calculateFrequency(halfstep: note.rawValue)
     }
     
     func calculateFrequency(halfstep: Int) -> Decimal {
@@ -47,4 +69,9 @@ class ViewController: NSViewController {
         
         return frequencyA4 * pow(Decimal(twelfthRootOfTwo), halfstep)
     }
+}
+
+enum Note: Int {
+    case C = 3
+    case CSharp, D, DSharp, E, F, FSharp, G, GSharp, A, ASharp, B
 }
