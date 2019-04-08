@@ -12,6 +12,8 @@ class ViewController: NSViewController {
     var oscillator = AKOscillator()
     var mixer = AKMixer()
     
+    var currentHalfstep: Int = 0;
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,9 +25,6 @@ class ViewController: NSViewController {
         }
         
         oscillator.amplitude = 1
-        oscillator.stop()
-        oscillator.frequency = [220, 440, 880].randomElement()!
-        oscillator.start()
         
         NSEvent.addLocalMonitorForEvents(matching: .keyDown) { (event) -> NSEvent? in
             self.keyDown(with: event)
@@ -35,8 +34,17 @@ class ViewController: NSViewController {
     
     override func keyDown(with event: NSEvent) {
         if event.keyCode == 49 {
-            oscillator.frequency = [220, 440, 880].randomElement()!
+            oscillator.frequency = Double(calculateFrequency(halfstep: currentHalfstep).description)!
             oscillator.start()
+
+            currentHalfstep = currentHalfstep + 1
         }
+    }
+    
+    func calculateFrequency(halfstep: Int) -> Decimal {
+        let frequencyA4: Decimal = 440.0
+        let twelfthRootOfTwo: Double = pow(2,(1/12))
+        
+        return frequencyA4 * pow(Decimal(twelfthRootOfTwo), halfstep)
     }
 }
