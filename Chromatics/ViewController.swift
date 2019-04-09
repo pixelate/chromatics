@@ -44,22 +44,9 @@ class ViewController: NSViewController {
         super.viewDidLoad()
         
         setupAudio()
-        
-        NSEvent.addLocalMonitorForEvents(matching: .keyDown) { (event) -> NSEvent? in
-            self.keyDown(with: event)
-            return nil
-        }
-
-        NSEvent.addLocalMonitorForEvents(matching: .keyUp) { (event) -> NSEvent? in
-            self.keyUp(with: event)
-            return nil
-        }
+        setupEventHandlers()
     }
 
-    override func viewDidDisappear() {
-        super.viewWillDisappear()
-    }
-    
     override func keyDown(with event: NSEvent) {
         if let note = keyMappings[event.keyCode] {
             playNote(note)
@@ -87,9 +74,18 @@ class ViewController: NSViewController {
         }
 
         AudioKit.output = mixer
-        do {
-            try AudioKit.start()
-        } catch {
+        do { try AudioKit.start() } catch {}
+    }
+    
+    func setupEventHandlers() {
+        NSEvent.addLocalMonitorForEvents(matching: .keyDown) { (event) -> NSEvent? in
+            self.keyDown(with: event)
+            return nil
+        }
+        
+        NSEvent.addLocalMonitorForEvents(matching: .keyUp) { (event) -> NSEvent? in
+            self.keyUp(with: event)
+            return nil
         }
     }
     
