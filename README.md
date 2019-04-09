@@ -1,5 +1,7 @@
 # Chromatics
 
+![Screenshot](screenshot.png "Screenshot")
+
 A simple synthesizer for macOS with keyboard input based on [AudioKit](https://audiokit.io/).
 
 ## Build
