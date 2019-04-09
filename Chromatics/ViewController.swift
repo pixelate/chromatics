@@ -9,8 +9,8 @@ import AudioKit
 import Cocoa
 
 class ViewController: NSViewController {
-    var oscillator = AKOscillator()
-    var mixer = AKMixer()
+    var oscillator: AKOscillator = AKOscillator()
+    var mixer: AKMixer = AKMixer()
     
     let keyMappings: [UInt16: Note] = [
          6: Note.C,
@@ -30,15 +30,7 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        mixer = AKMixer(oscillator)
-        AudioKit.output = mixer
-        do {
-            try AudioKit.start()
-        } catch {
-        }
-        
-        oscillator.start()
-        oscillator.amplitude = 1
+        setupAudio()
         
         NSEvent.addLocalMonitorForEvents(matching: .keyDown) { (event) -> NSEvent? in
             self.keyDown(with: event)
@@ -58,19 +50,39 @@ class ViewController: NSViewController {
         }
     }
     
+    func setupAudio() {
+        oscillator = AKOscillator(waveform: AKTable(.triangle))
+        mixer = AKMixer(oscillator)
+        AudioKit.output = mixer
+        do {
+            try AudioKit.start()
+        } catch {
+        }
+        
+        oscillator.start()
+        oscillator.amplitude = 1
+    }
+    
     func playNote(_ note: Note) {
         oscillator.frequency = Double(frequencyForNote(note: note).description)!
     }
     
     func frequencyForNote(note: Note, octave: Int = 4) -> Decimal {
-        return calculateFrequency(halfstep: note.rawValue)
+        let octaveOffset: Int = (octave - 4) * 12
+        return calculateFrequency(halfstep: note.rawValue + octaveOffset)
     }
-    
+
+    // See https://pages.mtu.edu/~suits/NoteFreqCalcs.html
     func calculateFrequency(halfstep: Int) -> Decimal {
         let frequencyA4: Decimal = 440.0
         let twelfthRootOfTwo: Double = pow(2,(1/12))
         
-        return frequencyA4 * pow(Decimal(twelfthRootOfTwo), halfstep)
+        if(halfstep < 0) {
+            return frequencyA4 / pow(Decimal(twelfthRootOfTwo), -halfstep)
+        }
+        else {
+            return frequencyA4 * pow(Decimal(twelfthRootOfTwo), halfstep)
+        }
     }
 }
 
