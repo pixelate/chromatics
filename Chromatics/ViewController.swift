@@ -12,6 +12,21 @@ class ViewController: NSViewController {
     var oscillator = AKOscillator()
     var mixer = AKMixer()
     
+    let keyMappings: [UInt16: Note] = [
+         6: Note.C,
+         1: Note.CSharp,
+         7: Note.D,
+         2: Note.DSharp,
+         8: Note.E,
+         9: Note.F,
+         5: Note.FSharp,
+        11: Note.G,
+         4: Note.GSharp,
+        45: Note.A,
+        38: Note.ASharp,
+        46: Note.B
+    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,28 +45,16 @@ class ViewController: NSViewController {
             return nil
         }
     }
+
+    override func viewDidDisappear() {
+        super.viewWillDisappear()
+        
+        oscillator.stop()
+    }
     
     override func keyDown(with event: NSEvent) {
-        print(event.keyCode)
-
-        if event.keyCode == 6 {
-            playNote(Note.C)
-        }
-
-        if event.keyCode == 1 {
-            playNote(Note.CSharp)
-        }
-
-        if event.keyCode == 7 {
-            playNote(Note.D)
-        }
-
-        if event.keyCode == 2 {
-            playNote(Note.DSharp)
-        }
-
-        if event.keyCode == 8 {
-            playNote(Note.E)
+        if let note = keyMappings[event.keyCode] {
+            playNote(note)
         }
     }
     
