@@ -15,27 +15,14 @@ struct Constants {
     static let halfstepsInOctave: Int = 12
 }
 
-enum Note: Int {
+enum Note: Int, CaseIterable {
     case C = 3
     case CSharp, D, DSharp, E, F, FSharp, G, GSharp, A, ASharp, B
 }
 
 class ViewController: NSViewController {
-    var oscillators: [Note: AKOscillator] = [
-        Note.C:      AKOscillator(waveform: AKTable(.triangle)),
-        Note.CSharp: AKOscillator(waveform: AKTable(.triangle)),
-        Note.D:      AKOscillator(waveform: AKTable(.triangle)),
-        Note.DSharp: AKOscillator(waveform: AKTable(.triangle)),
-        Note.E:      AKOscillator(waveform: AKTable(.triangle)),
-        Note.F:      AKOscillator(waveform: AKTable(.triangle)),
-        Note.FSharp: AKOscillator(waveform: AKTable(.triangle)),
-        Note.G:      AKOscillator(waveform: AKTable(.triangle)),
-        Note.GSharp: AKOscillator(waveform: AKTable(.triangle)),
-        Note.A:      AKOscillator(waveform: AKTable(.triangle)),
-        Note.ASharp: AKOscillator(waveform: AKTable(.triangle)),
-        Note.B:      AKOscillator(waveform: AKTable(.triangle))
-    ]
-    
+    var oscillators: [Note: AKOscillator] = [:]
+
     var mixer: AKMixer = AKMixer()
     
     let keyMappings: [UInt16: Note] = [
@@ -89,12 +76,16 @@ class ViewController: NSViewController {
 
     func setupAudio() {
         mixer = AKMixer()
-        
-        for(note, oscillator) in oscillators {
-            oscillator.frequency = Double(frequencyForNote(note: note).description)!
-            mixer.connect(input: oscillator)
+
+        for(note) in Note.allCases {
+            oscillators[note] = AKOscillator(
+                waveform: AKTable(.triangle),
+                frequency: Double(frequencyForNote(note: note).description)!
+            )
+            
+            mixer.connect(input: oscillators[note])
         }
-        
+
         AudioKit.output = mixer
         do {
             try AudioKit.start()
