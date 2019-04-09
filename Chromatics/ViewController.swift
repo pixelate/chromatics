@@ -23,6 +23,20 @@ enum Note: Int, CaseIterable {
 }
 
 class ViewController: NSViewController {
+    @IBOutlet weak var buttonKeyZ: NSButton!
+    @IBOutlet weak var buttonKeyX: NSButton!
+    @IBOutlet weak var buttonKeyC: NSButton!
+    @IBOutlet weak var buttonKeyV: NSButton!
+    @IBOutlet weak var buttonKeyB: NSButton!
+    @IBOutlet weak var buttonKeyN: NSButton!
+    @IBOutlet weak var buttonKeyM: NSButton!
+    @IBOutlet weak var buttonKeySemicolon: NSButton!
+    @IBOutlet weak var buttonKeyS: NSButton!
+    @IBOutlet weak var buttonKeyD: NSButton!
+    @IBOutlet weak var buttonKeyG: NSButton!
+    @IBOutlet weak var buttonKeyH: NSButton!
+    @IBOutlet weak var buttonKeyJ: NSButton!
+    
     var oscillators: [UInt16: AKOscillator] = [:]
 
     var mixer: AKMixer = AKMixer()
@@ -76,6 +90,8 @@ class ViewController: NSViewController {
                 octaveModifier + 1
             )
         }
+        
+        highlightKey(event.keyCode, true)
     }
 
     override func keyUp(with event: NSEvent) {
@@ -84,6 +100,8 @@ class ViewController: NSViewController {
                 oscillator.stop()
             }
         }
+
+        highlightKey(event.keyCode, false)
     }
 
     func setupAudio() {
@@ -128,6 +146,38 @@ class ViewController: NSViewController {
         }
         else {
             return Constants.frequencyA4 * pow(Decimal(Constants.twelfthRootOfTwo), halfsteps)
+        }
+    }
+    
+    func highlightKey(_ keycode: UInt16, _ shouldHighlight: Bool) {
+        switch(keycode) {
+        case 6:
+            buttonKeyZ.highlight(shouldHighlight)
+        case 7:
+            buttonKeyX.highlight(shouldHighlight)
+        case 8:
+            buttonKeyC.highlight(shouldHighlight)
+        case 9:
+            buttonKeyV.highlight(shouldHighlight)
+        case 11:
+            buttonKeyB.highlight(shouldHighlight)
+        case 45:
+            buttonKeyN.highlight(shouldHighlight)
+        case 46:
+            buttonKeyM.highlight(shouldHighlight)
+        case 43:
+            buttonKeySemicolon.highlight(shouldHighlight)
+        case 1:
+            buttonKeyS.highlight(shouldHighlight)
+        case 2:
+            buttonKeyD.highlight(shouldHighlight)
+        case 5:
+            buttonKeyG.highlight(shouldHighlight)
+        case 4:
+            buttonKeyH.highlight(shouldHighlight)
+        case 38:
+            buttonKeyJ.highlight(shouldHighlight)
+        default: ()
         }
     }
 }

@@ -800,7 +800,7 @@
                                 <rect key="frame" x="102" y="204" width="78" height="21"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NUX-AB-UGp">
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NUX-AB-UGp" userLabel="Button KeyS">
                                         <rect key="frame" x="-6" y="-7" width="49" height="32"/>
                                         <buttonCell key="cell" type="push" title="S" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4yS-I8-Haa">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -826,6 +826,22 @@
                             </stackView>
                         </subviews>
                     </view>
+                    <connections>
+                        <outlet property="buttonKeyB" destination="QaQ-bb-TGF" id="T9k-oS-p1j"/>
+                        <outlet property="buttonKeyC" destination="rIp-Cw-ErP" id="4ha-Yq-U1Y"/>
+                        <outlet property="buttonKeyD" destination="1gs-0s-A2M" id="akR-vr-neU"/>
+                        <outlet property="buttonKeyG" destination="u2n-Ig-jP1" id="Qck-Yr-eGV"/>
+                        <outlet property="buttonKeyH" destination="oJI-Pv-nzG" id="Gpc-ZM-Vhq"/>
+                        <outlet property="buttonKeyJ" destination="RZH-FW-Nb2" id="bGi-XW-v77"/>
+                        <outlet property="buttonKeyM" destination="2cz-r0-Obz" id="AQQ-vl-1UL"/>
+                        <outlet property="buttonKeyN" destination="D7K-DM-94U" id="x5a-9e-a2R"/>
+                        <outlet property="buttonKeyS" destination="NUX-AB-UGp" id="hhS-k1-Qj4"/>
+                        <outlet property="buttonKeySemicolon" destination="Kbi-Eg-HFr" id="uVe-QT-Wd7"/>
+                        <outlet property="buttonKeyV" destination="Zi8-X5-beA" id="eKN-3y-XK6"/>
+                        <outlet property="buttonKeyX" destination="91n-GG-1gc" id="jkf-C4-TST"/>
+                        <outlet property="buttonKeyZ" destination="hgt-YI-hvs" id="EOC-B5-liQ"/>
+                        <outlet property="buttonKezS" destination="NUX-AB-UGp" id="MRS-JR-pNp"/>
+                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
