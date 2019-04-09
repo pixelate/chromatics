@@ -21,7 +21,21 @@ enum Note: Int {
 }
 
 class ViewController: NSViewController {
-    var oscillator: AKOscillator = AKOscillator()
+    var oscillators: [Note: AKOscillator] = [
+        Note.C:      AKOscillator(waveform: AKTable(.triangle)),
+        Note.CSharp: AKOscillator(waveform: AKTable(.triangle)),
+        Note.D:      AKOscillator(waveform: AKTable(.triangle)),
+        Note.DSharp: AKOscillator(waveform: AKTable(.triangle)),
+        Note.E:      AKOscillator(waveform: AKTable(.triangle)),
+        Note.F:      AKOscillator(waveform: AKTable(.triangle)),
+        Note.FSharp: AKOscillator(waveform: AKTable(.triangle)),
+        Note.G:      AKOscillator(waveform: AKTable(.triangle)),
+        Note.GSharp: AKOscillator(waveform: AKTable(.triangle)),
+        Note.A:      AKOscillator(waveform: AKTable(.triangle)),
+        Note.ASharp: AKOscillator(waveform: AKTable(.triangle)),
+        Note.B:      AKOscillator(waveform: AKTable(.triangle))
+    ]
+    
     var mixer: AKMixer = AKMixer()
     
     let keyMappings: [UInt16: Note] = [
@@ -48,12 +62,15 @@ class ViewController: NSViewController {
             self.keyDown(with: event)
             return nil
         }
+
+        NSEvent.addLocalMonitorForEvents(matching: .keyUp) { (event) -> NSEvent? in
+            self.keyUp(with: event)
+            return nil
+        }
     }
 
     override func viewDidDisappear() {
         super.viewWillDisappear()
-        
-        oscillator.stop()
     }
     
     override func keyDown(with event: NSEvent) {
@@ -61,22 +78,34 @@ class ViewController: NSViewController {
             playNote(note)
         }
     }
-    
+
+    override func keyUp(with event: NSEvent) {
+        if let note = keyMappings[event.keyCode] {
+            if let oscillator = oscillators[note] {
+                oscillator.stop()
+            }
+        }
+    }
+
     func setupAudio() {
-        oscillator = AKOscillator(waveform: AKTable(.triangle))
-        mixer = AKMixer(oscillator)
+        mixer = AKMixer()
+        
+        for(_, oscillator) in oscillators {
+            mixer.connect(input: oscillator)
+        }
+        
         AudioKit.output = mixer
         do {
             try AudioKit.start()
         } catch {
         }
-        
-        oscillator.start()
-        oscillator.amplitude = 1
     }
     
     func playNote(_ note: Note) {
-        oscillator.frequency = Double(frequencyForNote(note: note).description)!
+        if let oscillator = oscillators[note] {
+            oscillator.frequency = Double(frequencyForNote(note: note).description)!
+            oscillator.start()
+        }
     }
     
     func frequencyForNote(note: Note, octave: Int = Constants.baseOctave) -> Decimal {
