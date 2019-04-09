@@ -8,6 +8,18 @@
 import AudioKit
 import Cocoa
 
+struct Constants {
+    static let frequencyA4: Decimal = 440.0
+    static let twelfthRootOfTwo: Double = pow(2,(1/12))
+    static let baseOctave: Int = 4
+    static let halfstepsInOctave: Int = 12
+}
+
+enum Note: Int {
+    case C = 3
+    case CSharp, D, DSharp, E, F, FSharp, G, GSharp, A, ASharp, B
+}
+
 class ViewController: NSViewController {
     var oscillator: AKOscillator = AKOscillator()
     var mixer: AKMixer = AKMixer()
@@ -67,26 +79,19 @@ class ViewController: NSViewController {
         oscillator.frequency = Double(frequencyForNote(note: note).description)!
     }
     
-    func frequencyForNote(note: Note, octave: Int = 4) -> Decimal {
-        let octaveOffset: Int = (octave - 4) * 12
-        return calculateFrequency(halfstep: note.rawValue + octaveOffset)
+    func frequencyForNote(note: Note, octave: Int = Constants.baseOctave) -> Decimal {
+        let octaveOffset: Int = (octave - Constants.baseOctave) * Constants.halfstepsInOctave
+        return calculateFrequency(halfsteps: note.rawValue + octaveOffset)
     }
 
     // See https://pages.mtu.edu/~suits/NoteFreqCalcs.html
-    func calculateFrequency(halfstep: Int) -> Decimal {
-        let frequencyA4: Decimal = 440.0
-        let twelfthRootOfTwo: Double = pow(2,(1/12))
-        
-        if(halfstep < 0) {
-            return frequencyA4 / pow(Decimal(twelfthRootOfTwo), -halfstep)
+    func calculateFrequency(halfsteps: Int) -> Decimal {
+        if(halfsteps < 0) {
+            return Constants.frequencyA4 / pow(Decimal(Constants.twelfthRootOfTwo), -halfsteps)
         }
         else {
-            return frequencyA4 * pow(Decimal(twelfthRootOfTwo), halfstep)
+            return Constants.frequencyA4 * pow(Decimal(Constants.twelfthRootOfTwo), halfsteps)
         }
     }
 }
 
-enum Note: Int {
-    case C = 3
-    case CSharp, D, DSharp, E, F, FSharp, G, GSharp, A, ASharp, B
-}
