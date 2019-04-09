@@ -17,7 +17,7 @@ struct Constants {
     static let halfstepsInOctave: Int = 12
 }
 
-enum Note: Int, CaseIterable {
+enum Note: Int {
     case C = 3
     case CSharp, D, DSharp, E, F, FSharp, G, GSharp, A, ASharp, B
 }
@@ -67,15 +67,7 @@ class ViewController: NSViewController {
     }
 
     override func keyDown(with event: NSEvent) {
-        if let (note, octave) = keyMappings[event.keyCode] {
-            if let oscillator = oscillators[event.keyCode] {
-                oscillator.frequency = Double(frequencyForNote(
-                    note: note,
-                    octave: octave + octaveModifier
-                ).description)!
-                oscillator.start()
-            }
-        }
+        playNoteForKeyCode(event.keyCode)
         
         if(event.keyCode == 47) {
             octaveModifier = max(
@@ -131,6 +123,18 @@ class ViewController: NSViewController {
         NSEvent.addLocalMonitorForEvents(matching: .keyUp) { (event) -> NSEvent? in
             self.keyUp(with: event)
             return nil
+        }
+    }
+
+    func playNoteForKeyCode(_ keyCode: UInt16) {
+        if let (note, octave) = keyMappings[keyCode] {
+            if let oscillator = oscillators[keyCode] {
+                oscillator.frequency = Double(frequencyForNote(
+                    note: note,
+                    octave: octave + octaveModifier
+                    ).description)!
+                oscillator.start()
+            }
         }
     }
     
