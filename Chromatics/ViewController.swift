@@ -21,23 +21,24 @@ enum Note: Int, CaseIterable {
 }
 
 class ViewController: NSViewController {
-    var oscillators: [Note: AKOscillator] = [:]
+    var oscillators: [UInt16: AKOscillator] = [:]
 
     var mixer: AKMixer = AKMixer()
     
-    let keyMappings: [UInt16: Note] = [
-         6: Note.C,
-         1: Note.CSharp,
-         7: Note.D,
-         2: Note.DSharp,
-         8: Note.E,
-         9: Note.F,
-         5: Note.FSharp,
-        11: Note.G,
-         4: Note.GSharp,
-        45: Note.A,
-        38: Note.ASharp,
-        46: Note.B
+    let keyMappings: [UInt16: (Note, Int)] = [
+        6:  (note: Note.C, octave: 4),
+        1:  (note: Note.CSharp, octave: 4),
+        7:  (note: Note.D, octave: 4),
+        2:  (note: Note.DSharp, octave: 4),
+        8:  (note: Note.E, octave: 4),
+        9:  (note: Note.F, octave: 4),
+        5:  (note: Note.FSharp, octave: 4),
+        11: (note: Note.G, octave: 4),
+        4:  (note: Note.GSharp, octave: 4),
+        45: (note: Note.A, octave: 4),
+        38: (note: Note.ASharp, octave: 4),
+        46: (note: Note.B, octave: 4),
+        43: (note: Note.C, octave: 5)
     ]
     
     override func viewDidLoad() {
@@ -48,14 +49,17 @@ class ViewController: NSViewController {
     }
 
     override func keyDown(with event: NSEvent) {
-        if let note = keyMappings[event.keyCode] {
-            playNote(note)
+        if let (note, octave) = keyMappings[event.keyCode] {
+            if let oscillator = oscillators[event.keyCode] {
+                oscillator.frequency = Double(frequencyForNote(note: note, octave: octave).description)!
+                oscillator.start()
+            }
         }
     }
 
     override func keyUp(with event: NSEvent) {
-        if let note = keyMappings[event.keyCode] {
-            if let oscillator = oscillators[note] {
+        if keyMappings[event.keyCode] != nil {
+            if let oscillator = oscillators[event.keyCode] {
                 oscillator.stop()
             }
         }
@@ -64,13 +68,15 @@ class ViewController: NSViewController {
     func setupAudio() {
         mixer = AKMixer()
 
-        for(note) in Note.allCases {
-            oscillators[note] = AKOscillator(
+        for (key, value) in keyMappings {
+            let (note, octave) = value
+            oscillators[key] = AKOscillator(
                 waveform: AKTable(.triangle),
-                frequency: Double(frequencyForNote(note: note).description)!
+                frequency: Double(frequencyForNote(note: note, octave: octave).description)!
             )
             
-            mixer.connect(input: oscillators[note])
+            oscillators[key]!.rampDuration = 0
+            mixer.connect(input: oscillators[key])
         }
 
         AudioKit.output = mixer
@@ -86,13 +92,6 @@ class ViewController: NSViewController {
         NSEvent.addLocalMonitorForEvents(matching: .keyUp) { (event) -> NSEvent? in
             self.keyUp(with: event)
             return nil
-        }
-    }
-    
-    func playNote(_ note: Note) {
-        if let oscillator = oscillators[note] {
-            oscillator.frequency = Double(frequencyForNote(note: note).description)!
-            oscillator.start()
         }
     }
     
