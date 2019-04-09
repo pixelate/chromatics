@@ -12,6 +12,8 @@ struct Constants {
     static let frequencyA4: Decimal = 440.0
     static let twelfthRootOfTwo: Double = pow(2,(1/12))
     static let baseOctave: Int = 4
+    static let minOctave: Int = 1
+    static let maxOctave: Int = 5
     static let halfstepsInOctave: Int = 12
 }
 
@@ -24,6 +26,8 @@ class ViewController: NSViewController {
     var oscillators: [UInt16: AKOscillator] = [:]
 
     var mixer: AKMixer = AKMixer()
+    
+    var octaveModifier: Int = 0
     
     let keyMappings: [UInt16: (Note, Int)] = [
         6:  (note: Note.C, octave: 4),
@@ -51,9 +55,26 @@ class ViewController: NSViewController {
     override func keyDown(with event: NSEvent) {
         if let (note, octave) = keyMappings[event.keyCode] {
             if let oscillator = oscillators[event.keyCode] {
-                oscillator.frequency = Double(frequencyForNote(note: note, octave: octave).description)!
+                oscillator.frequency = Double(frequencyForNote(
+                    note: note,
+                    octave: octave + octaveModifier
+                ).description)!
                 oscillator.start()
             }
+        }
+        
+        if(event.keyCode == 47) {
+            octaveModifier = max(
+                Constants.minOctave - Constants.baseOctave,
+                octaveModifier - 1
+            )
+        }
+
+        if(event.keyCode == 44) {
+            octaveModifier = min(
+                Constants.maxOctave - Constants.baseOctave,
+                octaveModifier + 1
+            )
         }
     }
 
