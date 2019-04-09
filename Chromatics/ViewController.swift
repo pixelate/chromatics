@@ -90,7 +90,8 @@ class ViewController: NSViewController {
     func setupAudio() {
         mixer = AKMixer()
         
-        for(_, oscillator) in oscillators {
+        for(note, oscillator) in oscillators {
+            oscillator.frequency = Double(frequencyForNote(note: note).description)!
             mixer.connect(input: oscillator)
         }
         
