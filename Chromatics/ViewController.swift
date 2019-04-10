@@ -37,6 +37,15 @@ class ViewController: NSViewController {
     @IBOutlet weak var buttonKeyH: NSButton!
     @IBOutlet weak var buttonKeyJ: NSButton!
     
+    @IBAction func buttonKeyAction(_ button: MusicalKeyButton) {
+        if(button.state == NSControl.StateValue.on) {
+            playNoteForKeyCode(button.keyCode)
+        }
+        else {
+            stopNoteForKeyCode(button.keyCode)
+        }
+    }
+    
     var oscillators: [UInt16: AKOscillator] = [:]
 
     var mixer: AKMixer = AKMixer()
@@ -68,7 +77,8 @@ class ViewController: NSViewController {
 
     override func keyDown(with event: NSEvent) {
         playNoteForKeyCode(event.keyCode)
-        
+        highlightKey(event.keyCode, true)
+
         if(event.keyCode == 47) {
             octaveModifier = max(
                 Constants.minOctave - Constants.baseOctave,
@@ -82,17 +92,10 @@ class ViewController: NSViewController {
                 octaveModifier + 1
             )
         }
-        
-        highlightKey(event.keyCode, true)
     }
 
     override func keyUp(with event: NSEvent) {
-        if keyMappings[event.keyCode] != nil {
-            if let oscillator = oscillators[event.keyCode] {
-                oscillator.stop()
-            }
-        }
-
+        stopNoteForKeyCode(event.keyCode)
         highlightKey(event.keyCode, false)
     }
 
@@ -134,6 +137,14 @@ class ViewController: NSViewController {
                     octave: octave + octaveModifier
                     ).description)!
                 oscillator.start()
+            }
+        }
+    }
+    
+    func stopNoteForKeyCode(_ keyCode: UInt16) {
+        if keyMappings[keyCode] != nil {
+            if let oscillator = oscillators[keyCode] {
+                oscillator.stop()
             }
         }
     }

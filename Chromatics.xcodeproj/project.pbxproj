@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6202B5C7225DE17A003C5815 /* MusicalKeyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6202B5C6225DE17A003C5815 /* MusicalKeyButton.swift */; };
 		C4BDE7ED1C12FAE600207DA9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BDE7EC1C12FAE600207DA9 /* AppDelegate.swift */; };
 		C4BDE7EF1C12FAE600207DA9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BDE7EE1C12FAE600207DA9 /* ViewController.swift */; };
 		C4BDE7F11C12FAE600207DA9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4BDE7F01C12FAE600207DA9 /* Assets.xcassets */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6202B5C6225DE17A003C5815 /* MusicalKeyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicalKeyButton.swift; sourceTree = "<group>"; };
 		C4BDE7E91C12FAE600207DA9 /* Chromatics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chromatics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4BDE7EC1C12FAE600207DA9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C4BDE7EE1C12FAE600207DA9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				C4BDE7F01C12FAE600207DA9 /* Assets.xcassets */,
 				C4BDE7F21C12FAE600207DA9 /* Main.storyboard */,
 				C4BDE7F51C12FAE600207DA9 /* Info.plist */,
+				6202B5C6225DE17A003C5815 /* MusicalKeyButton.swift */,
 			);
 			path = Chromatics;
 			sourceTree = "<group>";
@@ -103,7 +106,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 1020;
-				ORGANIZATIONNAME = AudioKit;
+				ORGANIZATIONNAME = '';
 				TargetAttributes = {
 					C4BDE7E81C12FAE600207DA9 = {
 						CreatedOnToolsVersion = 7.2;
@@ -146,6 +149,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6202B5C7225DE17A003C5815 /* MusicalKeyButton.swift in Sources */,
 				C4BDE7EF1C12FAE600207DA9 /* ViewController.swift in Sources */,
 				C4BDE7ED1C12FAE600207DA9 /* AppDelegate.swift in Sources */,
 			);
