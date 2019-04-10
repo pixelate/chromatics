@@ -23,19 +23,19 @@ enum Note: Int {
 }
 
 class ViewController: NSViewController {
-    @IBOutlet weak var buttonKeyZ: NSButton!
-    @IBOutlet weak var buttonKeyX: NSButton!
-    @IBOutlet weak var buttonKeyC: NSButton!
-    @IBOutlet weak var buttonKeyV: NSButton!
-    @IBOutlet weak var buttonKeyB: NSButton!
-    @IBOutlet weak var buttonKeyN: NSButton!
-    @IBOutlet weak var buttonKeyM: NSButton!
-    @IBOutlet weak var buttonKeySemicolon: NSButton!
-    @IBOutlet weak var buttonKeyS: NSButton!
-    @IBOutlet weak var buttonKeyD: NSButton!
-    @IBOutlet weak var buttonKeyG: NSButton!
-    @IBOutlet weak var buttonKeyH: NSButton!
-    @IBOutlet weak var buttonKeyJ: NSButton!
+    @IBOutlet weak var buttonKeyZ: MusicalKeyButton!
+    @IBOutlet weak var buttonKeyX: MusicalKeyButton!
+    @IBOutlet weak var buttonKeyC: MusicalKeyButton!
+    @IBOutlet weak var buttonKeyV: MusicalKeyButton!
+    @IBOutlet weak var buttonKeyB: MusicalKeyButton!
+    @IBOutlet weak var buttonKeyN: MusicalKeyButton!
+    @IBOutlet weak var buttonKeyM: MusicalKeyButton!
+    @IBOutlet weak var buttonKeySemicolon: MusicalKeyButton!
+    @IBOutlet weak var buttonKeyS: MusicalKeyButton!
+    @IBOutlet weak var buttonKeyD: MusicalKeyButton!
+    @IBOutlet weak var buttonKeyG: MusicalKeyButton!
+    @IBOutlet weak var buttonKeyH: MusicalKeyButton!
+    @IBOutlet weak var buttonKeyJ: MusicalKeyButton!
     
     @IBAction func buttonKeyAction(_ button: MusicalKeyButton) {
         if(button.state == NSControl.StateValue.on) {
@@ -45,6 +45,8 @@ class ViewController: NSViewController {
             stopNoteForKeyCode(button.keyCode)
         }
     }
+
+    var buttonCollection: [MusicalKeyButton] = []
     
     var oscillators: [UInt16: AKOscillator] = [:]
 
@@ -68,16 +70,49 @@ class ViewController: NSViewController {
         43: (note: Note.C, octave: 5)
     ]
     
+    func setupButtonCollection() {
+        buttonCollection = [
+            buttonKeyZ,
+            buttonKeyX,
+            buttonKeyC,
+            buttonKeyV,
+            buttonKeyB,
+            buttonKeyN,
+            buttonKeyM,
+            buttonKeySemicolon,
+            buttonKeyS,
+            buttonKeyD,
+            buttonKeyG,
+            buttonKeyH,
+            buttonKeyJ
+        ]
+    }
+
+    
+    func findButtonByKeyCode(_ keyCode: UInt16) -> MusicalKeyButton? {
+        for button in buttonCollection {
+            if button.keyCode == keyCode {
+                return button
+            }
+        }
+        
+        return nil
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupAudio()
         setupEventHandlers()
+        setupButtonCollection()
     }
 
     override func keyDown(with event: NSEvent) {
         playNoteForKeyCode(event.keyCode)
-        highlightKey(event.keyCode, true)
+        
+        if let button = findButtonByKeyCode(event.keyCode) {
+            button.highlight(true)
+        }
 
         if(event.keyCode == 47) {
             octaveModifier = max(
@@ -96,7 +131,11 @@ class ViewController: NSViewController {
 
     override func keyUp(with event: NSEvent) {
         stopNoteForKeyCode(event.keyCode)
-        highlightKey(event.keyCode, false)
+        
+        if let button = findButtonByKeyCode(event.keyCode) {
+            button.highlight(false)
+            button.state = .off
+        }
     }
 
     func setupAudio() {
@@ -161,38 +200,6 @@ class ViewController: NSViewController {
         }
         else {
             return Constants.frequencyA4 * pow(Decimal(Constants.twelfthRootOfTwo), halfsteps)
-        }
-    }
-    
-    func highlightKey(_ keycode: UInt16, _ shouldHighlight: Bool) {
-        switch(keycode) {
-        case 6:
-            buttonKeyZ.highlight(shouldHighlight)
-        case 7:
-            buttonKeyX.highlight(shouldHighlight)
-        case 8:
-            buttonKeyC.highlight(shouldHighlight)
-        case 9:
-            buttonKeyV.highlight(shouldHighlight)
-        case 11:
-            buttonKeyB.highlight(shouldHighlight)
-        case 45:
-            buttonKeyN.highlight(shouldHighlight)
-        case 46:
-            buttonKeyM.highlight(shouldHighlight)
-        case 43:
-            buttonKeySemicolon.highlight(shouldHighlight)
-        case 1:
-            buttonKeyS.highlight(shouldHighlight)
-        case 2:
-            buttonKeyD.highlight(shouldHighlight)
-        case 5:
-            buttonKeyG.highlight(shouldHighlight)
-        case 4:
-            buttonKeyH.highlight(shouldHighlight)
-        case 38:
-            buttonKeyJ.highlight(shouldHighlight)
-        default: ()
         }
     }
 }
