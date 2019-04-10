@@ -1,6 +1,6 @@
 # Chromatics
 
-![Screenshot](screenshot.png "Screenshot")
+<img src="screenshot.png" alt="Screenshot" width="592" height="506">
 
 A simple synthesizer for macOS with keyboard input based on [AudioKit](https://audiokit.io/).
 
