@@ -12,13 +12,13 @@ struct Constants {
     static let frequencyA4: Decimal = 440.0
     static let twelfthRootOfTwo: Double = pow(2,(1/12))
     static let baseOctave: Int = 4
-    static let minOctave: Int = 1
-    static let maxOctave: Int = 5
+    static let minOctave: Int = 2
+    static let maxOctave: Int = 6
     static let halfstepsInOctave: Int = 12
 }
 
 enum Note: Int {
-    case C = 3
+    case C = -9 // C4 is 9 halfsteps below A4
     case CSharp, D, DSharp, E, F, FSharp, G, GSharp, A, ASharp, B
 }
 
@@ -88,7 +88,6 @@ class ViewController: NSViewController {
         ]
     }
 
-    
     func findButtonByKeyCode(_ keyCode: UInt16) -> MusicalKeyButton? {
         for button in buttonCollection {
             if button.keyCode == keyCode {
