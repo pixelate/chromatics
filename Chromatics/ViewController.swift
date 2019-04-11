@@ -48,9 +48,7 @@ class ViewController: NSViewController {
     }
 
     @IBAction func octaveSegmentedControlAction(_ segmentedControl: OctaveSegmentedControl) {
-        
         let octave = segmentedControl.selectedSegment + Constants.minOctave
-
         octaveModifier = octave - Constants.baseOctave
     }
     
@@ -98,14 +96,8 @@ class ViewController: NSViewController {
         ]
     }
 
-    func findButtonByKeyCode(_ keyCode: UInt16) -> MusicalKeyButton? {
-        for button in buttonCollection {
-            if button.keyCode == keyCode {
-                return button
-            }
-        }
-        
-        return nil
+    func findButtonBy(keyCode: UInt16) -> MusicalKeyButton? {
+        return buttonCollection.first(where: { $0.keyCode == keyCode })
     }
     
     override func viewDidLoad() {
@@ -119,7 +111,7 @@ class ViewController: NSViewController {
     override func keyDown(with event: NSEvent) {
         playNoteForKeyCode(event.keyCode)
         
-        if let button = findButtonByKeyCode(event.keyCode) {
+        if let button = findButtonBy(keyCode: event.keyCode) {
             button.highlight(true)
         }
                 
@@ -144,7 +136,7 @@ class ViewController: NSViewController {
     override func keyUp(with event: NSEvent) {
         stopNoteForKeyCode(event.keyCode)
         
-        if let button = findButtonByKeyCode(event.keyCode) {
+        if let button = findButtonBy(keyCode: event.keyCode) {
             button.highlight(false)
             button.state = .off
         }

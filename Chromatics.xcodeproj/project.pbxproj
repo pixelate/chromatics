@@ -63,12 +63,12 @@
 			isa = PBXGroup;
 			children = (
 				C4BDE7EC1C12FAE600207DA9 /* AppDelegate.swift */,
+				6202B5C6225DE17A003C5815 /* MusicalKeyButton.swift */,
+				625A2016225F457300CD7D8C /* OctaveSegmentedControl.swift */,
 				C4BDE7EE1C12FAE600207DA9 /* ViewController.swift */,
 				C4BDE7F01C12FAE600207DA9 /* Assets.xcassets */,
 				C4BDE7F21C12FAE600207DA9 /* Main.storyboard */,
 				C4BDE7F51C12FAE600207DA9 /* Info.plist */,
-				6202B5C6225DE17A003C5815 /* MusicalKeyButton.swift */,
-				625A2016225F457300CD7D8C /* OctaveSegmentedControl.swift */,
 			);
 			path = Chromatics;
 			sourceTree = "<group>";
