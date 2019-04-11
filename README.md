@@ -10,7 +10,9 @@ Xcode 10.2 is required to build. Download [AudioKit.framework](https://github.co
 
 <img src="screenshot.png" alt="Screenshot" width="592" height="506">
 
-Press keys on keyboard as shown above to play musical notes. Click on buttons with mouse to toggle musical notes.
+Press keys on keyboard as shown above to play musical notes. Click buttons to toggle musical notes.
+
+Press keys 2 – 5 to change octave.
 
 ## Learnings
 
