@@ -18,8 +18,4 @@ import Cocoa
         super.init(coder: coder)
         self.sendAction(on: [.leftMouseDown, .leftMouseUp])
     }
-    
-    override func draw(_ dirtyRect: NSRect) {
-        super.draw(dirtyRect)
-    }
 }

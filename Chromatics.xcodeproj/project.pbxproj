@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		6202B5C7225DE17A003C5815 /* MusicalKeyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6202B5C6225DE17A003C5815 /* MusicalKeyButton.swift */; };
 		625A2017225F457300CD7D8C /* OctaveSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625A2016225F457300CD7D8C /* OctaveSegmentedControl.swift */; };
+		625A201B225F881000CD7D8C /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625A201A225F881000CD7D8C /* AudioController.swift */; };
+		625A201D225F8A9100CD7D8C /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625A201C225F8A9100CD7D8C /* Note.swift */; };
+		625A201F225F8AD500CD7D8C /* Octave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625A201E225F8AD500CD7D8C /* Octave.swift */; };
 		C4BDE7ED1C12FAE600207DA9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BDE7EC1C12FAE600207DA9 /* AppDelegate.swift */; };
 		C4BDE7EF1C12FAE600207DA9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BDE7EE1C12FAE600207DA9 /* ViewController.swift */; };
 		C4BDE7F11C12FAE600207DA9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4BDE7F01C12FAE600207DA9 /* Assets.xcassets */; };
@@ -19,6 +22,9 @@
 /* Begin PBXFileReference section */
 		6202B5C6225DE17A003C5815 /* MusicalKeyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicalKeyButton.swift; sourceTree = "<group>"; };
 		625A2016225F457300CD7D8C /* OctaveSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OctaveSegmentedControl.swift; sourceTree = "<group>"; };
+		625A201A225F881000CD7D8C /* AudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = "<group>"; };
+		625A201C225F8A9100CD7D8C /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		625A201E225F8AD500CD7D8C /* Octave.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Octave.swift; sourceTree = "<group>"; };
 		C4BDE7E91C12FAE600207DA9 /* Chromatics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chromatics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4BDE7EC1C12FAE600207DA9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C4BDE7EE1C12FAE600207DA9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -62,13 +68,16 @@
 		C4BDE7EB1C12FAE600207DA9 /* Chromatics */ = {
 			isa = PBXGroup;
 			children = (
+				C4BDE7F51C12FAE600207DA9 /* Info.plist */,
 				C4BDE7EC1C12FAE600207DA9 /* AppDelegate.swift */,
+				625A201A225F881000CD7D8C /* AudioController.swift */,
 				6202B5C6225DE17A003C5815 /* MusicalKeyButton.swift */,
+				625A201C225F8A9100CD7D8C /* Note.swift */,
+				625A201E225F8AD500CD7D8C /* Octave.swift */,
 				625A2016225F457300CD7D8C /* OctaveSegmentedControl.swift */,
 				C4BDE7EE1C12FAE600207DA9 /* ViewController.swift */,
 				C4BDE7F01C12FAE600207DA9 /* Assets.xcassets */,
 				C4BDE7F21C12FAE600207DA9 /* Main.storyboard */,
-				C4BDE7F51C12FAE600207DA9 /* Info.plist */,
 			);
 			path = Chromatics;
 			sourceTree = "<group>";
@@ -152,10 +161,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				625A201B225F881000CD7D8C /* AudioController.swift in Sources */,
 				6202B5C7225DE17A003C5815 /* MusicalKeyButton.swift in Sources */,
+				625A201F225F8AD500CD7D8C /* Octave.swift in Sources */,
 				C4BDE7EF1C12FAE600207DA9 /* ViewController.swift in Sources */,
 				625A2017225F457300CD7D8C /* OctaveSegmentedControl.swift in Sources */,
 				C4BDE7ED1C12FAE600207DA9 /* AppDelegate.swift in Sources */,
+				625A201D225F8A9100CD7D8C /* Note.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
