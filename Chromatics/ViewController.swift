@@ -23,12 +23,11 @@ class ViewController: NSViewController {
     @IBOutlet weak var buttonKeyH: MusicalKeyButton!
     @IBOutlet weak var buttonKeyJ: MusicalKeyButton!
     @IBOutlet weak var octaveSegmentedControl: OctaveSegmentedControl!
-    
+
     @IBAction func buttonKeyAction(_ button: MusicalKeyButton) {
         if(button.state == NSControl.StateValue.on) {
             audioController.playNoteForKeyCode(button.keyCode)
-        }
-        else {
+        } else {
             audioController.stopNoteForKeyCode(button.keyCode)
         }
     }
@@ -37,11 +36,11 @@ class ViewController: NSViewController {
         let octave = segmentedControl.selectedSegment + Octave.min
         audioController.octaveModifier = octave - Octave.base
     }
-    
+
     var buttonCollection: [MusicalKeyButton] = []
-    
+
     var audioController = AudioController()
-    
+
     func setupButtonCollection() {
         buttonCollection = [
             buttonKeyZ,
@@ -63,10 +62,10 @@ class ViewController: NSViewController {
     func findButtonBy(keyCode: UInt16) -> MusicalKeyButton? {
         return buttonCollection.first(where: { $0.keyCode == keyCode })
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         audioController.setup()
         setupEventHandlers()
         setupButtonCollection()
@@ -74,24 +73,21 @@ class ViewController: NSViewController {
 
     override func keyDown(with event: NSEvent) {
         audioController.playNoteForKeyCode(event.keyCode)
-        
+
         if let button = findButtonBy(keyCode: event.keyCode) {
             button.highlight(true)
         }
-                
+
         if(event.keyCode == 19) {
             audioController.octaveModifier = -2
             octaveSegmentedControl.selectedSegment = 0
-        }
-        else if(event.keyCode == 20) {
+        } else if(event.keyCode == 20) {
             audioController.octaveModifier = -1
             octaveSegmentedControl.selectedSegment = 1
-        }
-        else if(event.keyCode == 21) {
+        } else if(event.keyCode == 21) {
             audioController.octaveModifier = 0
             octaveSegmentedControl.selectedSegment = 2
-        }
-        else if(event.keyCode == 23) {
+        } else if(event.keyCode == 23) {
             audioController.octaveModifier = 1
             octaveSegmentedControl.selectedSegment = 3
         }
@@ -99,7 +95,7 @@ class ViewController: NSViewController {
 
     override func keyUp(with event: NSEvent) {
         audioController.stopNoteForKeyCode(event.keyCode)
-        
+
         if let button = findButtonBy(keyCode: event.keyCode) {
             button.highlight(false)
             button.state = .off
@@ -111,11 +107,10 @@ class ViewController: NSViewController {
             self.keyDown(with: event)
             return nil
         }
-        
+
         NSEvent.addLocalMonitorForEvents(matching: .keyUp) { (event) -> NSEvent? in
             self.keyUp(with: event)
             return nil
         }
     }
 }
-

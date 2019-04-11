@@ -13,7 +13,7 @@ import Cocoa
         didSet {
         }
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.sendAction(on: [.leftMouseDown, .leftMouseUp])
