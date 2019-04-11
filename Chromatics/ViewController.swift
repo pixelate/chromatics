@@ -50,8 +50,10 @@ class ViewController: NSViewController {
     
     var oscillators: [UInt16: AKOscillator] = [:]
 
-    var mixer: AKMixer = AKMixer()
+    var mixer: AKMixer?
     
+    var envelopes: [UInt16: AKAmplitudeEnvelope] = [:]
+
     var octaveModifier: Int = 0
     
     let keyMappings: [UInt16: (Note, Int)] = [
@@ -142,15 +144,17 @@ class ViewController: NSViewController {
 
         for (key, value) in keyMappings {
             let (note, octave) = value
-            oscillators[key] = AKOscillator(
+            let oscillator = AKOscillator(
                 waveform: AKTable(.triangle),
                 frequency: Double(frequencyForNote(note: note, octave: octave).description)!
             )
             
-            oscillators[key]!.rampDuration = 0
-            mixer.connect(input: oscillators[key])
+            oscillator.rampDuration = 0
+            envelopes[key] = AKAmplitudeEnvelope(oscillator)
+            oscillators[key] = oscillator
         }
-
+        
+        mixer = AKMixer(Array(envelopes.values))
         AudioKit.output = mixer
         do { try AudioKit.start() } catch {}
     }
@@ -176,13 +180,17 @@ class ViewController: NSViewController {
                     ).description)!
                 oscillator.start()
             }
+            
+            if let envelope = envelopes[keyCode] {
+                envelope.start()
+            }
         }
     }
     
     func stopNoteForKeyCode(_ keyCode: UInt16) {
         if keyMappings[keyCode] != nil {
-            if let oscillator = oscillators[keyCode] {
-                oscillator.stop()
+            if let envelope = envelopes[keyCode] {
+                envelope.stop()
             }
         }
     }
