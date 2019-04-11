@@ -13,7 +13,7 @@ struct Constants {
     static let twelfthRootOfTwo: Double = pow(2,(1/12))
     static let baseOctave: Int = 4
     static let minOctave: Int = 2
-    static let maxOctave: Int = 6
+    static let maxOctave: Int = 5
     static let halfstepsInOctave: Int = 12
 }
 
@@ -46,6 +46,13 @@ class ViewController: NSViewController {
         }
     }
 
+    @IBAction func octaveSegmentedControlAction(_ segmentedControl: OctaveSegmentedControl) {
+        
+        let octave = segmentedControl.selectedSegment + Constants.minOctave
+
+        octaveModifier = octave - Constants.baseOctave
+    }
+    
     var buttonCollection: [MusicalKeyButton] = []
     
     var oscillators: [UInt16: AKOscillator] = [:]
@@ -113,20 +120,6 @@ class ViewController: NSViewController {
         
         if let button = findButtonByKeyCode(event.keyCode) {
             button.highlight(true)
-        }
-
-        if(event.keyCode == 47) {
-            octaveModifier = max(
-                Constants.minOctave - Constants.baseOctave,
-                octaveModifier - 1
-            )
-        }
-
-        if(event.keyCode == 44) {
-            octaveModifier = min(
-                Constants.maxOctave - Constants.baseOctave,
-                octaveModifier + 1
-            )
         }
     }
 

@@ -678,7 +678,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="3" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" fixedFrame="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fvb-ui-inH">
-                                <rect key="frame" x="80" y="175" width="317" height="21"/>
+                                <rect key="frame" x="94" y="133" width="317" height="21"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hgt-YI-hvs" customClass="MusicalKeyButton" customModule="Chromatics" customModuleProvider="target">
@@ -824,7 +824,7 @@
                                 </customSpacing>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="3" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" fixedFrame="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="thk-Ds-cvU">
-                                <rect key="frame" x="221" y="204" width="117" height="21"/>
+                                <rect key="frame" x="235" y="162" width="117" height="21"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="u2n-Ig-jP1" customClass="MusicalKeyButton" customModule="Chromatics" customModuleProvider="target">
@@ -885,7 +885,7 @@
                                 </customSpacing>
                             </stackView>
                             <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="3" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" fixedFrame="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wk1-5P-a2M">
-                                <rect key="frame" x="102" y="204" width="78" height="21"/>
+                                <rect key="frame" x="116" y="162" width="78" height="21"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NUX-AB-UGp" userLabel="Button KeyS" customClass="MusicalKeyButton" customModule="Chromatics" customModuleProvider="target">
@@ -928,6 +928,25 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                             </stackView>
+                            <segmentedControl verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bpk-Xc-UeN" customClass="OctaveSegmentedControl" customModule="Chromatics" customModuleProvider="target">
+                                <rect key="frame" x="66" y="216" width="170" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="qr7-vS-W5e">
+                                    <font key="font" metaFont="system"/>
+                                    <segments>
+                                        <segment alignment="left" width="32"/>
+                                        <segment width="32" selected="YES" tag="1"/>
+                                        <segment width="32"/>
+                                        <segment width="32"/>
+                                        <segment width="32">
+                                            <nil key="label"/>
+                                        </segment>
+                                    </segments>
+                                </segmentedCell>
+                                <connections>
+                                    <action selector="octaveSegmentedControlAction:" target="XfG-lQ-9wD" id="J1K-uj-zps"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                     </view>
                     <connections>
