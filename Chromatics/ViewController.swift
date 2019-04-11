@@ -36,6 +36,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var buttonKeyG: MusicalKeyButton!
     @IBOutlet weak var buttonKeyH: MusicalKeyButton!
     @IBOutlet weak var buttonKeyJ: MusicalKeyButton!
+    @IBOutlet weak var octaveSegmentedControl: OctaveSegmentedControl!
     
     @IBAction func buttonKeyAction(_ button: MusicalKeyButton) {
         if(button.state == NSControl.StateValue.on) {
@@ -120,6 +121,23 @@ class ViewController: NSViewController {
         
         if let button = findButtonByKeyCode(event.keyCode) {
             button.highlight(true)
+        }
+                
+        if(event.keyCode == 19) {
+            octaveModifier = -2
+            octaveSegmentedControl.selectedSegment = 0
+        }
+        else if(event.keyCode == 20) {
+            octaveModifier = -1
+            octaveSegmentedControl.selectedSegment = 1
+        }
+        else if(event.keyCode == 21) {
+            octaveModifier = 0
+            octaveSegmentedControl.selectedSegment = 2
+        }
+        else if(event.keyCode == 23) {
+            octaveModifier = 1
+            octaveSegmentedControl.selectedSegment = 3
         }
     }
 

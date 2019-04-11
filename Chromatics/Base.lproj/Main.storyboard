@@ -963,6 +963,7 @@
                         <outlet property="buttonKeyV" destination="Zi8-X5-beA" id="eKN-3y-XK6"/>
                         <outlet property="buttonKeyX" destination="91n-GG-1gc" id="jkf-C4-TST"/>
                         <outlet property="buttonKeyZ" destination="hgt-YI-hvs" id="EOC-B5-liQ"/>
+                        <outlet property="octaveSegmentedControl" destination="Bpk-Xc-UeN" id="0dF-wk-iMd"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
